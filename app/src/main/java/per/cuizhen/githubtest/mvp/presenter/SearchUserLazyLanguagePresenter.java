@@ -3,11 +3,7 @@ package per.cuizhen.githubtest.mvp.presenter;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -23,6 +19,7 @@ import per.cuizhen.githubtest.mvp.model.SearchUserBean;
 import per.cuizhen.githubtest.mvp.model.SearchUserListBean;
 import per.cuizhen.githubtest.mvp.model.UserReposBean;
 import per.cuizhen.githubtest.mvp.view.SearchUserLazyLanguageView;
+import per.cuizhen.githubtest.utils.PreferenceLanguageUtils;
 
 /**
  * @author CuiZhen
@@ -93,7 +90,7 @@ public class SearchUserLazyLanguagePresenter extends BasePresenter<SearchUserLaz
                         SearchUserListBean searchUserListBean = new SearchUserListBean();
                         searchUserListBean.setName(name);
                         if (userReposBeans != null && userReposBeans.size() > 0) {
-                            String language = findPreferenceLanguage(userReposBeans);
+                            String language = PreferenceLanguageUtils.findPreferenceLanguage(userReposBeans);
                             searchUserListBean.setLanguage(language);
                         }
                         if (TextUtils.isEmpty(searchUserListBean.getLanguage())) {
@@ -128,29 +125,6 @@ public class SearchUserLazyLanguagePresenter extends BasePresenter<SearchUserLaz
                     public void onComplete() {
                     }
                 });
-    }
-
-    private String findPreferenceLanguage(List<UserReposBean> userReposBeans) {
-        HashMap<String, Integer> map = new HashMap<>();
-        for (int i = 0; i < userReposBeans.size(); i++) {
-            UserReposBean userReposBean = userReposBeans.get(i);
-            final String language = userReposBean.getLanguage();
-            Integer count = map.get(language);
-            if (count != null) {
-                map.put(language, count + 1);
-            } else {
-                map.put(language, 1);
-            }
-        }
-        Collection<Integer> count = map.values();
-        int maxCount = Collections.max(count);
-        String preferenceLanguage = "";
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            if (maxCount == entry.getValue()) {
-                preferenceLanguage = entry.getKey();
-            }
-        }
-        return preferenceLanguage;
     }
 
 }
