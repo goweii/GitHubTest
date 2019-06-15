@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+apply from: "../basic.gradle"
+
+android {
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        renderscriptSupportModeEnabled true
+        ndk {
+            abiFilters /*'armeabi' ,*/'armeabi-v7a'/*, 'arm64-v8a'*/
+        }
+    }
+    resourcePrefix ""
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.dependencies.multidex
+    implementation rootProject.ext.dependencies.design
+    implementation rootProject.ext.dependencies.recyclerview
+    implementation rootProject.ext.dependencies.constraintLayout
+
+    implementation rootProject.ext.dependencies.butterknife
+    annotationProcessor rootProject.ext.dependencies.butterknifeCompiler
+
+    implementation rootProject.ext.dependencies.eventbus
+
+    implementation rootProject.ext.dependencies.gson
+
+    implementation rootProject.ext.dependencies.glide
+    annotationProcessor rootProject.ext.dependencies.glideCompiler
+    implementation(rootProject.ext.dependencies.glideOkhttp3) {
+        exclude group: "com.android.support"
+    }
+
+    implementation rootProject.ext.dependencies.retrofit2
+    implementation rootProject.ext.dependencies.retrofit2AdapterRxjava2
+    implementation rootProject.ext.dependencies.retrofit2ConverterGson
+    implementation rootProject.ext.dependencies.okhttp3Logging
+    implementation rootProject.ext.dependencies.okhttp3
+    implementation rootProject.ext.dependencies.okio
+    implementation rootProject.ext.dependencies.rxjava2
+    implementation rootProject.ext.dependencies.rxandroid
+
+    implementation rootProject.ext.dependencies.smartRefreshLayout
+    implementation rootProject.ext.dependencies.bravh
+    implementation rootProject.ext.dependencies.anyLayer
+    implementation rootProject.ext.dependencies.actionBarEx
+    implementation rootProject.ext.dependencies.circleimageview
+}

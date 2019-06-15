@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GitHubTest</string>
+    <string name="search_hint">请输入用户名</string>
+    <string name="search">搜索</string>
+</resources>
