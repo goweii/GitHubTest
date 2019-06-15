@@ -5,13 +5,15 @@ import android.util.SparseArray;
 import android.view.View;
 
 /**
+ * 缓存一层view，避免频繁findViewById
+ *
  * @author CuiZhen
  * @date 2019/6/15
  * QQ: 302833254
  * E-mail: goweii@163.com
  * GitHub: https://github.com/goweii
  */
-public abstract class CacheActivity extends AppCompatActivity {
+abstract class CacheActivity extends AppCompatActivity {
 
     private SparseArray<View> mViewCaches = null;
     private View mActivityContent = null;

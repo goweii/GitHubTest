@@ -36,10 +36,13 @@ public class SearchUserLazyLanguageAdapter extends BaseQuickAdapter<SearchUserLi
                 .into(civUserIcon);
         TextView tvLanguage = helper.getView(R.id.tv_language);
         if (item.getLanguage() == null) {
+            // 正在获取偏好语言
             tvLanguage.setText(R.string.language_waiting);
         } else if (TextUtils.isEmpty(item.getLanguage())) {
+            // 获取偏好语言失败
             tvLanguage.setText(R.string.language_failed);
         } else {
+            // 获取偏好语言成功，unknown是在本地加的，为用户没有仓库或未设置语言时
             tvLanguage.setText(item.getLanguage());
         }
     }

@@ -22,7 +22,7 @@ public class LoadingDialog {
 
     private static final long ANIM_DURATION = 200;
     private final Context context;
-    private AnyLayer mAnyDialog;
+    private AnyLayer mAnyLayer;
     private int count = 0;
 
     private LoadingDialog(Context context) {
@@ -36,7 +36,7 @@ public class LoadingDialog {
     public void show() {
         if (count <= 0) {
             count = 0;
-            mAnyDialog = AnyLayer.with(context)
+            mAnyLayer = AnyLayer.with(context)
                     .contentView(R.layout.dialog_loading)
                     .backgroundColorInt(Color.TRANSPARENT)
                     .cancelableOnClickKeyBack(false)
@@ -53,7 +53,7 @@ public class LoadingDialog {
                             return AnimHelper.createZoomOutAnim(target).setDuration(ANIM_DURATION);
                         }
                     });
-            mAnyDialog.show();
+            mAnyLayer.show();
         }
         count++;
     }
@@ -66,9 +66,9 @@ public class LoadingDialog {
     }
 
     public void clear() {
-        if (mAnyDialog != null) {
-            mAnyDialog.dismiss();
-            mAnyDialog = null;
+        if (mAnyLayer != null) {
+            mAnyLayer.dismiss();
+            mAnyLayer = null;
         }
         count = 0;
     }
