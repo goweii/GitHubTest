@@ -2,4 +2,6 @@
     <string name="app_name">GitHubTest</string>
     <string name="search_hint">请输入用户名</string>
     <string name="search">搜索</string>
+    <string name="language_waiting">获取中...</string>
+    <string name="language_failed">获取失败</string>
 </resources>

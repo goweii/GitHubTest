@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp">
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="5dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civ_user_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:civ_circle_background_color="@color/bg"
-        tools:src="@mipmap/ic_launcher" />
-
-    <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_content"
-        android:layout_toRightOf="@+id/civ_user_icon"
-        android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"
-        android:textColor="@color/text_black"
-        tools:text="@string/app_name" />
+        android:layout_margin="15dp">
 
-    <TextView
-        android:id="@+id/tv_language"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_notes"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:textColor="@color/text_gray_light"
-        tools:text="Java" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_user_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:civ_circle_background_color="@color/bg"
+            tools:src="@mipmap/ic_launcher" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/civ_user_icon"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_content"
+            tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/tv_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_gray_light"
+            android:textSize="@dimen/text_notes"
+            tools:text="Java" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

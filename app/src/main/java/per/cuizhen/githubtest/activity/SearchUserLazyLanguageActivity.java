@@ -18,13 +18,22 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import per.cuizhen.githubtest.R;
-import per.cuizhen.githubtest.adapter.SearchUserAdapter;
+import per.cuizhen.githubtest.adapter.SearchUserLazyLanguageAdapter;
 import per.cuizhen.githubtest.base.BaseActivity;
 import per.cuizhen.githubtest.common.Config;
 import per.cuizhen.githubtest.mvp.model.SearchUserListBean;
 import per.cuizhen.githubtest.mvp.presenter.SearchUserLazyLanguagePresenter;
 import per.cuizhen.githubtest.mvp.view.SearchUserLazyLanguageView;
 
+/**
+ * 先加载用户列表，再查询每个用户的偏好语言
+ *
+ * @author CuiZhen
+ * @date 2019/6/15
+ * QQ: 302833254
+ * E-mail: goweii@163.com
+ * GitHub: https://github.com/goweii
+ */
 public class SearchUserLazyLanguageActivity extends BaseActivity<SearchUserLazyLanguagePresenter> implements SearchUserLazyLanguageView {
 
     @BindView(R.id.tb)
@@ -34,7 +43,7 @@ public class SearchUserLazyLanguageActivity extends BaseActivity<SearchUserLazyL
     @BindView(R.id.rv)
     RecyclerView rv;
 
-    private SearchUserAdapter mAdapter;
+    private SearchUserLazyLanguageAdapter mAdapter;
 
     private int currPage = Config.LIST_START_PAGE;
 
@@ -59,8 +68,10 @@ public class SearchUserLazyLanguageActivity extends BaseActivity<SearchUserLazyL
         setSupportActionBar(tb);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(manager);
-        mAdapter = new SearchUserAdapter();
+        mAdapter = new SearchUserLazyLanguageAdapter();
         rv.setAdapter(mAdapter);
+        mAdapter.closeLoadAnimation();
+        mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -106,6 +117,9 @@ public class SearchUserLazyLanguageActivity extends BaseActivity<SearchUserLazyL
             mAdapter.loadMoreComplete();
         }
         currPage++;
+        if (searchUserListBeanList.size() < Config.LIST_PER_PAGE) {
+            mAdapter.loadMoreEnd();
+        }
         for (SearchUserListBean searchUserListBean : searchUserListBeanList) {
             if (searchUserListBean.getLanguage() == null) {
                 presenter.userLanguage(searchUserListBean.getName());
@@ -132,6 +146,15 @@ public class SearchUserLazyLanguageActivity extends BaseActivity<SearchUserLazyL
     }
 
     @Override
-    public void userLanguageFail() {
+    public void userLanguageFail(String name) {
+        List<SearchUserListBean> datas = mAdapter.getData();
+        for (int i = 0; i < datas.size(); i++) {
+            SearchUserListBean data = datas.get(i);
+            if(TextUtils.equals(data.getName(), name)){
+                data.setLanguage("");
+                mAdapter.notifyItemChanged(i);
+                break;
+            }
+        }
     }
 }

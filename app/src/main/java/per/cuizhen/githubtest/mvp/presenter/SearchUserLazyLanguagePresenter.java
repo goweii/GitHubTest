@@ -1,5 +1,7 @@
 package per.cuizhen.githubtest.mvp.presenter;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -94,6 +96,9 @@ public class SearchUserLazyLanguagePresenter extends BasePresenter<SearchUserLaz
                             String language = findPreferenceLanguage(userReposBeans);
                             searchUserListBean.setLanguage(language);
                         }
+                        if (TextUtils.isEmpty(searchUserListBean.getLanguage())) {
+                            searchUserListBean.setLanguage("unknown");
+                        }
                         return Observable.just(searchUserListBean);
                     }
                 })
@@ -115,7 +120,7 @@ public class SearchUserLazyLanguagePresenter extends BasePresenter<SearchUserLaz
                     @Override
                     public void onError(Throwable e) {
                         if (isAttachView()) {
-                            getBaseView().userLanguageFail();
+                            getBaseView().userLanguageFail(name);
                         }
                     }
 

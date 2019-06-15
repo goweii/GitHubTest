@@ -1,7 +1,6 @@
 package per.cuizhen.githubtest.adapter;
 
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -20,9 +19,9 @@ import per.cuizhen.githubtest.mvp.model.SearchUserListBean;
  * E-mail: goweii@163.com
  * GitHub: https://github.com/goweii
  */
-public class SearchUserAdapter extends BaseQuickAdapter<SearchUserListBean, BaseViewHolder> {
+public class SearchUserLazyLanguageAdapter extends BaseQuickAdapter<SearchUserListBean, BaseViewHolder> {
 
-    public SearchUserAdapter() {
+    public SearchUserLazyLanguageAdapter() {
         super(R.layout.rv_item_user);
     }
 
@@ -36,10 +35,11 @@ public class SearchUserAdapter extends BaseQuickAdapter<SearchUserListBean, Base
                 .load(item.getIcon())
                 .into(civUserIcon);
         TextView tvLanguage = helper.getView(R.id.tv_language);
-        if (TextUtils.isEmpty(item.getLanguage())) {
-            tvLanguage.setVisibility(View.GONE);
+        if (item.getLanguage() == null) {
+            tvLanguage.setText(R.string.language_waiting);
+        } else if (TextUtils.isEmpty(item.getLanguage())) {
+            tvLanguage.setText(R.string.language_failed);
         } else {
-            tvLanguage.setVisibility(View.VISIBLE);
             tvLanguage.setText(item.getLanguage());
         }
     }

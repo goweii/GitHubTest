@@ -16,5 +16,5 @@ public interface SearchUserLazyLanguageView extends BaseView {
     void searchUserSuccess(List<SearchUserListBean> searchUserListBeanList);
     void searchUserFail();
     void userLanguageSuccess(SearchUserListBean searchUserListBean);
-    void userLanguageFail();
+    void userLanguageFail(String name);
 }

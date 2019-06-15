@@ -25,6 +25,8 @@ import per.cuizhen.githubtest.mvp.presenter.SearchUserPresenter;
 import per.cuizhen.githubtest.mvp.view.SearchUserView;
 
 /**
+ * 用户列表和偏好语言同时返回，速度慢
+ *
  * @author CuiZhen
  * @date 2019/6/15
  * QQ: 302833254
@@ -44,7 +46,7 @@ public class SearchUserActivity extends BaseActivity<SearchUserPresenter> implem
 
     private int currPage = Config.LIST_START_PAGE;
 
-    public static void start(Context context){
+    public static void start(Context context) {
         Intent intent = new Intent(context, SearchUserActivity.class);
         context.startActivity(intent);
     }
@@ -67,6 +69,8 @@ public class SearchUserActivity extends BaseActivity<SearchUserPresenter> implem
         rv.setLayoutManager(manager);
         mAdapter = new SearchUserAdapter();
         rv.setAdapter(mAdapter);
+        mAdapter.closeLoadAnimation();
+        mAdapter.setEnableLoadMore(false);
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -97,7 +101,7 @@ public class SearchUserActivity extends BaseActivity<SearchUserPresenter> implem
         }
     }
 
-    private void search(){
+    private void search() {
         String key = etSearch.getText().toString();
         presenter.searchUser(key, currPage);
     }
@@ -110,6 +114,9 @@ public class SearchUserActivity extends BaseActivity<SearchUserPresenter> implem
         } else {
             mAdapter.addData(searchUserListBeanList);
             mAdapter.loadMoreComplete();
+        }
+        if (searchUserListBeanList.size() < Config.LIST_PER_PAGE) {
+            mAdapter.loadMoreEnd();
         }
         currPage++;
     }
