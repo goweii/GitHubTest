@@ -129,6 +129,9 @@ public class SearchUserLazyLanguageActivity extends BaseActivity<SearchUserLazyL
 
     @Override
     public void searchUserFail() {
+        if (currPage > Config.LIST_START_PAGE) {
+            mAdapter.loadMoreFail();
+        }
         Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
     }
 
